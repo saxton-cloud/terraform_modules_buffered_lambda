@@ -55,6 +55,31 @@ variable "memory_size" {
   default     = 128
 }
 
+variable "policy" {
+  description = "specify any custom permissions your lambda requires here in the form of a serialised policy statement"
+  type        = string
+  default     = null
+}
+
+variable "assume_role_policy" {
+  description = "specify any custom assume role permissions here"
+  type        = string
+  default     = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": ["sts:AssumeRole"]
+    }
+  ]
+}
+EOF
+}
+
 variable "image_repository_name" {
   description = "optional name of the respository to use when referencing the image (used when sharing an image between ecs tasks, lambda, etc )"
   type        = string

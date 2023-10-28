@@ -3,23 +3,10 @@ locals {
   policy_path        = "/${var.product_code}/${var.qualifier}/"
 }
 
-data "aws_iam_policy_document" "assume_role" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["lambda.amazonaws.com"]
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
-}
-
 resource "aws_iam_role" "lambda_execution" {
   name               = "${local.qualified_name}-exec"
   description        = "roles used by lambda when accessing resources"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  assume_role_policy = var.assume_role_policy
 }
 
 
@@ -61,7 +48,6 @@ resource "aws_iam_policy" "input_buffer_access" {
   path   = local.policy_path
   policy = data.aws_iam_policy_document.input_buffer_access.json
 }
-
 resource "aws_iam_role_policy_attachment" "input_buffer_access" {
   role       = aws_iam_role.lambda_execution.name
   policy_arn = aws_iam_policy.input_buffer_access.arn
@@ -117,4 +103,20 @@ resource "aws_iam_role_policy_attachment" "aws_lambda_vpc_access_execution" {
   count      = var.vpc_config != null ? 1 : 0
   policy_arn = data.aws_iam_policy.AWSLambdaVPCAccessExecutionRole.arn
   role       = aws_iam_role.lambda_execution.name
+}
+
+
+resource "aws_iam_policy" "custom_policy" {
+  count       = var.policy == null ? 0 : 1
+  name        = "${local.policy_name_prefix}Custom"
+  description = "contains permissions specific to ${aws_lambda_function.this.function_name} lambda"
+  path        = local.policy_path
+  policy      = var.policy
+
+}
+
+resource "aws_iam_role_policy_attachment" "custom_policy" {
+  count      = length(aws_iam_policy.custom_policy) == 0 ? 0 : 1
+  role       = aws_iam_role.lambda_execution.name
+  policy_arn = aws_iam_policy.custom_policy[0].arn
 }

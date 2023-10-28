@@ -31,6 +31,59 @@ module "your_component" {
 - **batch_size** - _number_ - maximum number of items to ingest per invokation ( defaults to 10 )
 - **checkpoint_support** - _bool_ - enables [AWS lambda checkpointing](https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-ddb-batchfailurereporting) feature _( this affects the lambda's required response structure )_
 
+## security
+
+### policy
+
+though this module will ensure your lambda has the appropriate access to all resources created by the module, you will likely need to grant you lambda access to additional resources ( e.g. s3 buckets, kinesis streams, etc ). to do this, you specify a serialised IAM poliy object for the `policy` attribute
+
+```hcl
+module "your_component" {
+  source      = "https://github.com/acme-widgets-org/terraform_modules_buffered_lambda.git"
+  name        = var.name
+  ...
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = ["kinesis:PutRecords"]
+        Resource = [
+          aws_kinesis_stream.your_resource.arn
+        ]
+      }
+    ]
+  })
+}
+```
+
+### assume role
+
+should you need to permit additional principals the ability to assume your lambda's execution role, you can override the default using the `assume_role_policy` attribute
+
+```hcl
+module "your_component" {
+  source      = "https://github.com/acme-widgets-org/terraform_modules_buffered_lambda.git"
+  name        = var.name
+  ...
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = [
+            "lambda.amazonaws.com",
+            "someother-service.amazonaws.com"
+          ]
+        }
+        Action = ["sts:AssumeRole"]
+      }
+    ]
+  })
+}
+```
+
 ## vpc hosting
 
 to host your lambda within a vpc, you must provide the `vpc_config` block, specifying the relavant information
