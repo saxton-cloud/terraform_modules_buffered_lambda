@@ -30,9 +30,8 @@ variable "revision" {
   type        = string
 }
 
-variable "kms_key_id" {
-  description = "kms key id or alias to use for encryption - will create and use dedicated key not specified"
-  type        = string
+variable "kms_key" {
+  description = "kms key ( resource or data ) used to encrypt"
   default     = null
 }
 
