@@ -7,7 +7,7 @@
 - **name** - _str_ - name of the component
 - **qualifier** - _str_ - value used to distinguish one instance of this component from another in one or more aws accounts ( e.g. 'environment', branch, user, etc )
 - **revision** - _str_ - version of the component ( e.g. commit hash, build id, semver, etc)
-- **kms_key** - _object_ - optional reference to an existing KMS key resource/data to use for bucket encryption. ( a dedicated key will be created and used if a value is not supplied)
+- **kms_key** - _object_ - optional reference to an existing KMS key resource/data to use for bucket encryption. a dedicated key will be created and used if a value is not supplied.
 - **maximum_concurrency** - _number_ - maximum number of concurrent lambda instances servicing the input buffer ( defaults to 100 )
 - **memory_size** - _number_ - amount of memory allocated ( MiB ) to each lambda instance ( defaults to 128 )
 - **timeout** - _number_ - amount of time, in seconds, the lambda is permitted to execute ( defaults to 30 )

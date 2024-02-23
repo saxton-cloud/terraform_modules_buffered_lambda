@@ -24,6 +24,10 @@ resource "aws_lambda_function" "this" {
     }
   }
 
+  tracing_config {
+    mode = "PassThrough"
+  }
+
   environment {
     variables = merge({
       INPUT_BUFFER_URI = aws_sqs_queue.input_buffer.url,
