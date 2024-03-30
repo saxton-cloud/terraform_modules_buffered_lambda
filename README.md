@@ -35,7 +35,7 @@ module "your_component" {
 
 ### policy
 
-though this module will ensure your lambda has the appropriate access to all resources created by the module, you will likely need to grant you lambda access to additional resources ( e.g. s3 buckets, kinesis streams, etc ). to do this, you specify a serialised IAM poliy object for the `policy` attribute
+though this module will ensure your lambda has the appropriate access to all resources created by the module, you will likely need to grant your lambda access to additional resources ( e.g. s3 buckets, kinesis streams, etc ). to do this, you specify a serialised IAM poliy object for the `policy` attribute
 
 ```hcl
 module "your_component" {

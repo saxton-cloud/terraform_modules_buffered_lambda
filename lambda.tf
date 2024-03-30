@@ -33,6 +33,10 @@ resource "aws_lambda_function" "this" {
       INPUT_BUFFER_URI = aws_sqs_queue.input_buffer.url,
       DEADLETTER_URI   = aws_sqs_queue.dead_letter.url
       REVISION         = var.revision
+      PRODUCT_CODE     = var.product_code
+      SUBSYSTEM        = var.subsystem
+      QUALIFIER        = var.qualifier
+      LOG_LEVEL        = "INFO"
     }, var.environment)
   }
 }
