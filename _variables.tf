@@ -94,9 +94,9 @@ variable "timeout" {
 variable "image_config" {
   description = "optional image configuration overrides"
   type = object({
-    command           = string
-    entry_point       = string
-    working_directory = string
+    command           = list(string)
+    entry_point       = optional(list(string))
+    working_directory = optional(string)
   })
   default = null
 }

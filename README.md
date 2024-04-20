@@ -131,6 +131,11 @@ there are occasions where you may need to associate multiple lambdas with a sing
 
 in this case, your project will provision it's own ECR and have the lambda module's use this instead of creating their own
 
+- **command** - _list(string)_ - commmand override
+- **entry_point** - _list(string)_ - (optional) entrypoint override
+- **working_directory** - _string_ - (optional) working directory override
+
+
 ```hcl
 resource "aws_ecr_repository" "common" {
   name                 = replace("${local.name_prefix}-${var.name}", "_", "-")
