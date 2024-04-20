@@ -60,9 +60,10 @@ data "aws_iam_policy_document" "ecr_access" {
       type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
     }
-
-    actions = ["ecr:BatchGetImage",
-    "ecr:GetDownloadUrlForLayer"]
+    actions = [
+      "ecr:BatchGetImage",
+      "ecr:GetDownloadUrlForLayer"
+    ]
   }
 }
 
@@ -88,7 +89,7 @@ resource "aws_iam_policy" "ssm_access" {
           "ssm:GetParametersByPath"
         ]
         Resource = [
-          "arn:aws:ssm:*:${local.account_id}:parameter:${var.product_code}/${var.qualifier}/${var.subsystem}/${var.name}/*"
+          "arn:aws:ssm:*:${local.account_id}:parameter/${var.product_code}/${var.qualifier}/${var.subsystem}/${var.name}/*"
         ]
       }
     ]
