@@ -116,6 +116,16 @@ variable "batch_size" {
   default     = 10
 }
 
+variable "max_batch_window_seconds" {
+  description = "The maximum amount of time to gather records before invoking the function, in seconds (between 0 and 300)"
+  type        = number
+  default     = 0
+  validation {
+    condition     = var.max_batch_window_seconds >= 0 && var.max_batch_window_seconds <= 300
+    error_message = "max_batch_window_seconds value must be between 0 and 300 (inclusive)."
+  }
+}
+
 variable "checkpoint_support" {
   description = "whether or not to support batch item failure reporting"
   type        = bool

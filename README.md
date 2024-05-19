@@ -12,6 +12,12 @@
 - **memory_size** - _number_ - amount of memory allocated ( MiB ) to each lambda instance ( defaults to 128 )
 - **timeout** - _number_ - amount of time, in seconds, the lambda is permitted to execute ( defaults to 30 )
 
+## input buffer configuration
+
+- **batch_size** - _number_ - maximum number of records to send as batch per function invocation ( defaults to 10 )
+- **max_batch_window_seconds** - _number_ - amount of time, in seconds, lambda will wait to accumulate records before sending batch to function invocation ( defaults to 0 with max 300 seconds )
+- **checkpoint_support** - _bool_ - enables [AWS lambda checkpointing](https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-ddb-batchfailurereporting) feature _( this affects the lambda's required response structure )_
+
 ```hcl
 module "your_component" {
   source      = "https://github.com/acme-widgets-org/terraform_modules_buffered_lambda.git"
@@ -25,11 +31,6 @@ module "your_component" {
   timeout     = 180
 }
 ```
-
-## input buffer configuration
-
-- **batch_size** - _number_ - maximum number of items to ingest per invokation ( defaults to 10 )
-- **checkpoint_support** - _bool_ - enables [AWS lambda checkpointing](https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-ddb-batchfailurereporting) feature _( this affects the lambda's required response structure )_
 
 ## security
 

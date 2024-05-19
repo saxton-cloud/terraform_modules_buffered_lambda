@@ -8,7 +8,7 @@ resource "aws_sqs_queue" "input_buffer" {
     maxReceiveCount     = 4
   })
   # https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html
-  visibility_timeout_seconds = 6 * var.timeout
+  visibility_timeout_seconds = (6 * var.timeout) + var.max_batch_window_seconds
 }
 
 resource "aws_sqs_queue" "dead_letter" {
