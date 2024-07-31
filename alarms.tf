@@ -33,7 +33,7 @@ resource "aws_cloudwatch_metric_alarm" "lambda_throttles" {
 
 resource "aws_cloudwatch_metric_alarm" "sqs_deadletter_messages_visible" {
   alarm_name          = "${local.qualified_name}_sqs_dlq_ApproximateNumberOfMessagesVisible"
-  comparison_operator = "GreaterThanThreshold"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
   metric_name         = "ApproximateNumberOfMessagesVisible"
   namespace           = "AWS/SQS"

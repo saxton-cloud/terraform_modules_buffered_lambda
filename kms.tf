@@ -34,7 +34,7 @@ resource "aws_kms_key_policy" "custom" {
         Sid    = "Permit CloudWatch usage"
         Effect = "Allow"
         Principal = {
-          Service = "logs.${data.aws_region.current.name}.amazonaws.com"
+          Service = "logs.${local.region}.amazonaws.com"
         }
         Action = [
           "kms:Encrypt*",
@@ -46,7 +46,7 @@ resource "aws_kms_key_policy" "custom" {
         Resource = "*"
         Condition = {
           ArnLike = {
-            "kms:EncryptionContext:aws:logs:arn" : "arn:aws:logs:${data.aws_region.current.name}:${local.account_id}:*"
+            "kms:EncryptionContext:aws:logs:arn" : "arn:aws:logs:${local.region}:${local.account_id}:*"
           }
         }
       }

@@ -33,6 +33,10 @@ variable "revision" {
 variable "kms_key" {
   description = "kms key ( resource or data ) used to encrypt"
   default     = null
+  type = object({
+    key_id = string
+    arn    = string
+  })
 }
 
 variable "environment" {
