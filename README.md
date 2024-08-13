@@ -16,11 +16,11 @@
 
 - **batch_size** - _number_ - maximum number of records to send as batch per function invocation ( defaults to 10 )
 - **max_batch_window_seconds** - _number_ - amount of time, in seconds, lambda will wait to accumulate records before sending batch to function invocation ( defaults to 0 with max 300 seconds )
-- **checkpoint_support** - _bool_ - enables [AWS lambda checkpointing](https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-ddb-batchfailurereporting) feature _( this affects the lambda's required response structure )_
+- **checkpoint_support** - _bool_ - enables [AWS lambda checkpointing](https://docs.aws.amazon.com/prescriptive-guidance/latest/lambda-event-filtering-partial-batch-responses-for-sqs/benefits-partial-batch-responses.html) feature _( this affects the lambda's required response structure )_
 
 ```hcl
 module "your_component" {
-  source      = "https://github.com/acme-widgets-org/terraform_modules_buffered_lambda.git"
+  source      = "https://github.com/saxton-cloud/terraform_modules_buffered_lambda.git"
   name        = var.name
   description = "some description of the purpose of your_component"
   subsystem   = var.subsystem
@@ -40,7 +40,7 @@ though this module will ensure your lambda has the appropriate access to all res
 
 ```hcl
 module "your_component" {
-  source      = "https://github.com/acme-widgets-org/terraform_modules_buffered_lambda.git"
+  source      = "https://github.com/saxton-cloud/terraform_modules_buffered_lambda.git"
   name        = var.name
   ...
   policy = jsonencode({
@@ -64,7 +64,7 @@ should you need to permit additional principals the ability to assume your lambd
 
 ```hcl
 module "your_component" {
-  source      = "https://github.com/acme-widgets-org/terraform_modules_buffered_lambda.git"
+  source      = "https://github.com/saxton-cloud/terraform_modules_buffered_lambda.git"
   name        = var.name
   ...
   assume_role_policy = jsonencode({
@@ -97,7 +97,7 @@ to host your lambda within a vpc, you must provide the `vpc_config` block, speci
 ```hcl
 
 module "your_component" {
-  source      = "https://github.com/acme-widgets-org/terraform_modules_buffered_lambda.git"
+  source      = "https://github.com/saxton-cloud/terraform_modules_buffered_lambda.git"
   name        = var.name
   ...
   vpc_config = {
@@ -109,11 +109,11 @@ module "your_component" {
 
 ## environment variable configuration
 
-environment variables make be specified using the `environment` attribute
+environment variables may be specified using the `environment` attribute
 
 ```hcl
 module "your_component" {
-  source      = "https://github.com/acme-widgets-org/terraform_modules_buffered_lambda.git"
+  source      = "https://github.com/saxton-cloud/terraform_modules_buffered_lambda.git"
   name        = var.name
   ...
 
@@ -152,7 +152,7 @@ resource "aws_ecr_repository" "common" {
 }
 
 module "component_one" {
-  source                  = "https://github.com/acme-widgets-org/terraform_modules_buffered_lambda.git"
+  source                  = "https://github.com/saxton-cloud/terraform_modules_buffered_lambda.git"
   name                    = "component_one"
   subsystem               = var.subsystem
   qualifier               = var.qualifier
@@ -165,7 +165,7 @@ module "component_one" {
 }
 
 module "component_two" {
-  source                  = "https://github.com/acme-widgets-org/terraform_modules_buffered_lambda.git"
+  source                  = "https://github.com/saxton-cloud/terraform_modules_buffered_lambda.git"
   name                    = "component_two"
   subsystem               = var.subsystem
   qualifier               = var.qualifier
